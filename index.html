@@ -60,13 +60,16 @@
   const STORAGE = 'https://tsbfphiemylntpnqkbmz.supabase.co/storage/v1/object/public/releases/';
   const ANDROID_PACKAGE = 'app.skvoz.skvoz';
   const p = new URLSearchParams(location.hash.slice(1));
-  const code = /^[sy][\w-]{1,40}$/.test(p.get('t') || '') ? p.get('t') : null;
+  const ok = c => /^[sy][\w-]{1,40}$/.test(c || '');
+  const kind = ok(p.get('t')) ? 't' : ok(p.get('u')) ? 'u' : null;      // t — трек, u — исполнитель
+  const code = kind ? p.get(kind) : null;
   const ua = navigator.userAgent;
   const os = /Android/i.test(ua) ? 'android' : /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'ios'
     : /Mac/i.test(navigator.platform) ? 'mac' : /Win/i.test(navigator.platform) ? 'windows' : 'other';
 
   const toast = t => { const el = document.getElementById('toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 2200); };
   if (p.get('n')) { document.getElementById('title').textContent = p.get('n'); document.title = p.get('n') + ' — Сквозь'; }
+  if (kind === 'u') document.getElementById('kick').textContent = 'Тебе прислали исполнителя';
   if (p.get('a')) document.getElementById('by').textContent = p.get('a');
   if (!code) {
     document.getElementById('kick').textContent = 'Сквозь';
@@ -81,7 +84,7 @@
     document.body.append(ta); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} ta.remove(); return ok;
   }
   function launch() {
-    const q = 'open?t=' + encodeURIComponent(code);
+    const q = 'open?' + kind + '=' + encodeURIComponent(code);
     if (os === 'android') {
       const back = location.href.split('#')[0] + '#' + location.hash.slice(1).replace(/&nope=1/, '') + '&nope=1';
       location.href = 'intent://' + q + '#Intent;scheme=skvoz;package=' + ANDROID_PACKAGE + ';S.browser_fallback_url=' + encodeURIComponent(back) + ';end';
