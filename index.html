@@ -80,19 +80,21 @@
     const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
     document.body.append(ta); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} ta.remove(); return ok;
   }
-  document.getElementById('open').onclick = async () => {
-    await copy(location.href);
+  function launch() {
     const q = 'open?t=' + encodeURIComponent(code);
     if (os === 'android') {
-      const back = location.href.split('#')[0] + '#nope';
+      const back = location.href.split('#')[0] + '#' + location.hash.slice(1).replace(/&nope=1/, '') + '&nope=1';
       location.href = 'intent://' + q + '#Intent;scheme=skvoz;package=' + ANDROID_PACKAGE + ';S.browser_fallback_url=' + encodeURIComponent(back) + ';end';
     } else {
       location.href = 'skvoz://' + q;
     }
-    setTimeout(() => { document.getElementById('hint').textContent = 'Не открылось? Значит, «Сквозь» ещё не установлен — скачай ниже. Ссылка уже скопирована: открой «Сквозь» и вставь её в поиск.'; }, 1800);
-  };
+    setTimeout(() => { document.getElementById('hint').textContent = 'Не открылось? Значит, «Сквозь» ещё не установлен — скачай ниже. Или скопируй ссылку, открой «Сквозь» и вставь её в поиск.'; }, 1800);
+  }
+  document.getElementById('open').onclick = async () => { await copy(location.href); launch(); };
+  // ПК и Android — сразу в приложение (браузер может спросить «Открыть «Сквозь»?»); на айфоне — по нажатию
+  if (code && !p.get('nope') && (os === 'windows' || os === 'android')) setTimeout(launch, 350);
   document.getElementById('copy').onclick = async () => toast(await copy(location.href) ? 'Ссылка скопирована' : 'Выдели адрес и скопируй');
-  if (location.hash === '#nope') document.getElementById('dlText').textContent = 'Похоже, «Сквозь» на этом телефоне ещё нет. Скачай его — это бесплатно.';
+  if (p.get('nope')) document.getElementById('dlText').textContent = 'Похоже, «Сквозь» на этом телефоне ещё нет. Скачай его — это бесплатно, потом снова открой ссылку.';
 
   // кнопки скачивания — на последнюю опубликованную версию
   fetch(STORAGE + 'manifest.json?t=' + Date.now()).then(r => r.json()).then(m => {
