@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Сквозь — трек от друга</title>
+<meta name="description" content="Тебе прислали трек — послушай его в «Сквозь».">
+<meta property="og:title" content="Трек в «Сквозь»">
+<meta property="og:description" content="Тебе прислали трек — открой его в «Сквозь».">
+<meta name="theme-color" content="#141416">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23304a60'/%3E%3Cpath d='M16 28V42M27 18V46M38 24V42' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M49 30V40' stroke='%23e8c4a6' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root{--bg:#141416;--bg2:#1c1c20;--card:#25252b;--line:#2f2f36;--text:#f3efe8;--muted:#a29d95;--accent:#8fa7bc}
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:500 15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  body{display:grid;place-items:center;min-height:100vh;min-height:100dvh;padding:24px 16px calc(24px + env(safe-area-inset-bottom))}
+  body::before{content:"";position:fixed;inset:-20%;background:radial-gradient(40% 35% at 30% 25%,#40607a55,transparent 70%),radial-gradient(35% 30% at 75% 70%,#e8c4a62e,transparent 70%);filter:blur(40px);z-index:-1}
+  main{width:min(420px,100%);text-align:center}
+  .logo{width:84px;height:84px;border-radius:22px;box-shadow:0 20px 50px #000b}
+  .k{margin:26px 0 6px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  h1{margin:0;font-size:26px;line-height:1.2;font-weight:800;word-break:break-word}
+  .by{margin:6px 0 0;color:var(--muted);font-size:16px}
+  .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:52px;margin-top:12px;border:0;border-radius:16px;font:700 16px system-ui,sans-serif;cursor:pointer;text-decoration:none;transition:transform .1s,background .2s}
+  .btn:active{transform:scale(.98)}
+  .main{background:var(--text);color:#17171a;margin-top:30px}
+  .ghost{background:var(--bg2);color:var(--text);border:1px solid var(--line)}
+  .btn svg{width:20px;height:20px}
+  .note{margin-top:14px;color:var(--muted);font-size:13.5px}
+  .dl{margin-top:30px;padding:18px;border-radius:20px;background:#ffffff08;border:1px solid var(--line);text-align:left}
+  .dl b{display:block;font-size:15px}
+  .dl p{margin:4px 0 4px;color:var(--muted);font-size:13.5px}
+  .dl .btn{height:46px;font-size:15px}
+  .row{display:flex;gap:8px}.row .btn{flex:1}
+  .hide{display:none}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--bg2);border:1px solid var(--line);padding:10px 16px;border-radius:14px;font-weight:600;opacity:0;transition:opacity .2s}
+  .toast.on{opacity:1}
+</style>
+</head>
+<body>
+<main>
+  <svg class="logo" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#40607a"/><stop offset="1" stop-color="#141f29"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#g)"/><path d="M16 28V42" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M27 18V46" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M38 24V42" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M49 30V40" stroke="#e8c4a6" stroke-width="7" stroke-linecap="round"/></svg>
+  <div class="k" id="kick">Тебе прислали трек</div>
+  <h1 id="title">Трек в «Сквозь»</h1>
+  <p class="by" id="by"></p>
+
+  <div id="have">
+    <button class="btn main" id="open"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.8v14.4a1.2 1.2 0 0 0 1.8 1l12-7.2a1.2 1.2 0 0 0 0-2l-12-7.2A1.2 1.2 0 0 0 7 4.8z"/></svg>Открыть в «Сквозь»</button>
+    <p class="note" id="hint">Если «Сквозь» уже открыт, трек появится в нём сам.</p>
+  </div>
+
+  <div class="dl" id="dl">
+    <b>Нет «Сквозь»?</b>
+    <p id="dlText">Это бесплатный музыкальный плеер. Скачай, войди и снова открой эту ссылку.</p>
+    <div id="dlBtns"></div>
+    <button class="btn ghost" id="copy">Скопировать ссылку</button>
+  </div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+  const STORAGE = 'https://tsbfphiemylntpnqkbmz.supabase.co/storage/v1/object/public/releases/';
+  const ANDROID_PACKAGE = 'app.skvoz.skvoz';
+  const p = new URLSearchParams(location.hash.slice(1));
+  const code = /^[sy][\w-]{1,40}$/.test(p.get('t') || '') ? p.get('t') : null;
+  const ua = navigator.userAgent;
+  const os = /Android/i.test(ua) ? 'android' : /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'ios'
+    : /Mac/i.test(navigator.platform) ? 'mac' : /Win/i.test(navigator.platform) ? 'windows' : 'other';
+
+  const toast = t => { const el = document.getElementById('toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 2200); };
+  if (p.get('n')) { document.getElementById('title').textContent = p.get('n'); document.title = p.get('n') + ' — Сквозь'; }
+  if (p.get('a')) document.getElementById('by').textContent = p.get('a');
+  if (!code) {
+    document.getElementById('kick').textContent = 'Сквозь';
+    document.getElementById('title').textContent = 'Музыкальный плеер «Сквозь»';
+    document.getElementById('have').classList.add('hide');
+  }
+
+  // ссылку кладём в буфер: если «Сквозь» уже открыт, он найдёт её там, когда окажется на экране
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.append(ta); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} ta.remove(); return ok;
+  }
+  document.getElementById('open').onclick = async () => {
+    await copy(location.href);
+    const q = 'open?t=' + encodeURIComponent(code);
+    if (os === 'android') {
+      const back = location.href.split('#')[0] + '#nope';
+      location.href = 'intent://' + q + '#Intent;scheme=skvoz;package=' + ANDROID_PACKAGE + ';S.browser_fallback_url=' + encodeURIComponent(back) + ';end';
+    } else {
+      location.href = 'skvoz://' + q;
+    }
+    setTimeout(() => { document.getElementById('hint').textContent = 'Не открылось? Значит, «Сквозь» ещё не установлен — скачай ниже. Ссылка уже скопирована: открой «Сквозь» и вставь её в поиск.'; }, 1800);
+  };
+  document.getElementById('copy').onclick = async () => toast(await copy(location.href) ? 'Ссылка скопирована' : 'Выдели адрес и скопируй');
+  if (location.hash === '#nope') document.getElementById('dlText').textContent = 'Похоже, «Сквозь» на этом телефоне ещё нет. Скачай его — это бесплатно.';
+
+  // кнопки скачивания — на последнюю опубликованную версию
+  fetch(STORAGE + 'manifest.json?t=' + Date.now()).then(r => r.json()).then(m => {
+    const items = { android: ['Скачать для Android', m.android], windows: ['Скачать для Windows', m.windows], mac: ['Скачать для Mac (Apple Silicon)', m.mac] };
+    const order = [os, ...Object.keys(items).filter(k => k !== os)];
+    const box = document.getElementById('dlBtns');
+    box.innerHTML = order.filter(k => items[k] && items[k][1]).map((k, i) =>
+      `<a class="btn ${i === 0 && k === os ? 'main' : 'ghost'}" style="${i === 0 && k === os ? 'margin-top:12px' : ''}" href="${STORAGE + items[k][1].path}">${items[k][0]}</a>`).join('');
+    if (os === 'ios') document.getElementById('dlText').textContent = 'На iPhone «Сквозь» ставится через Sideloadly с компьютера — попроси того, кто прислал ссылку, помочь. Если уже стоит — нажми «Открыть».';
+    if (m.version) document.getElementById('dlText').textContent += ' Версия ' + m.version + '.';
+  }).catch(() => {});
+</script>
+</body>
+</html>
