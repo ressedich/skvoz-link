@@ -107,7 +107,7 @@
     box.innerHTML = order.filter(k => items[k] && items[k][1]).map((k, i) =>
       `<a class="btn ${i === 0 && k === os ? 'main' : 'ghost'}" style="${i === 0 && k === os ? 'margin-top:12px' : ''}" href="${STORAGE + items[k][1].path}">${items[k][0]}</a>`).join('');
     if (os === 'ios') document.getElementById('dlText').textContent = 'На iPhone «Сквозь» ставится через Sideloadly с компьютера — попроси того, кто прислал ссылку, помочь. Если уже стоит — нажми «Открыть».';
-    if (m.version) document.getElementById('dlText').textContent += ' Версия ' + m.version + '.';
+    if (m.name || m.version) document.getElementById('dlText').textContent += ' Версия ' + (m.name || m.version) + '.';
   }).catch(() => {});
 </script>
 </body>
