@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Скачать «Сквозь»</title>
+<meta name="description" content="Музыкальный плеер для SoundCloud и Яндекс Музыки. Windows, Mac, Android, iPhone.">
+<meta property="og:title" content="Скачать «Сквозь»">
+<meta property="og:description" content="Музыкальный плеер для SoundCloud и Яндекс Музыки. Windows, Mac, Android, iPhone.">
+<meta name="theme-color" content="#141416">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23304a60'/%3E%3Cpath d='M16 28V42M27 18V46M38 24V42' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M49 30V40' stroke='%23e8c4a6' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root{--bg:#141416;--text:#f1ede6;--muted:#9a958e;--dim:#6c6862;--line:#2a2a2f;--warm:#e8c4a6}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 24px calc(56px + env(safe-area-inset-bottom))}
+  header{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+  header svg{width:26px;height:26px;flex:none}
+  header .ver{margin-left:auto;font-variant-numeric:tabular-nums}
+  h1{margin:72px 0 0;font-size:clamp(56px,13vw,112px);line-height:.92;font-weight:800;letter-spacing:-.045em}
+  .lead{margin:22px 0 0;max-width:34em;font-size:18px;color:var(--muted)}
+  .lead b{color:var(--text);font-weight:600}
+  .get{margin:40px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
+  .main{display:inline-flex;align-items:center;gap:12px;height:54px;padding:0 26px;border-radius:12px;background:var(--warm);color:#1a1612;font-weight:700;font-size:17px;text-decoration:none}
+  .main:hover{background:#efd0b6}
+  .main svg{width:18px;height:18px}
+  .get small{color:var(--dim);font-size:14px;font-variant-numeric:tabular-nums}
+  h2{margin:72px 0 14px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td{padding:16px 0;border-top:1px solid var(--line);vertical-align:baseline}
+  tr:last-child td{border-bottom:1px solid var(--line)}
+  td:first-child{font-weight:600;width:24%}
+  td.what{color:var(--muted)}
+  td.size{color:var(--dim);text-align:right;padding-right:24px;white-space:nowrap}
+  td.go{text-align:right;white-space:nowrap;width:1%}
+  td.go a{font-weight:600;text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:4px}
+  td.go a:hover{text-decoration-color:var(--text)}
+  tr.me td:first-child::after{content:"это устройство";margin-left:10px;font-weight:400;font-size:12px;color:var(--warm)}
+  details{border-top:1px solid var(--line)}
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{padding:15px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-weight:600}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--dim);font-weight:400}
+  details[open] summary::after{content:"−"}
+  details ol{margin:0 0 18px;padding-left:22px;color:var(--muted)}
+  details li{margin:4px 0}
+  details li b{color:var(--text);font-weight:600}
+  .news{margin:0;padding-left:22px;color:var(--muted)}
+  .news li{margin:6px 0}
+  footer{margin-top:72px;color:var(--dim);font-size:14px}
+  .muted{color:var(--muted)}
+  @media (max-width:560px){
+    .wrap{padding:20px 18px calc(44px + env(safe-area-inset-bottom))}
+    h1{margin-top:52px}
+    .lead{font-size:16.5px}
+    .main{width:100%;justify-content:center}
+    td{padding:14px 0}
+    td:first-child{width:auto}
+    td.what{display:none}
+    td.size{padding-right:16px}
+    tr.me td:first-child::after{display:block;margin:2px 0 0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#304a60"/><path d="M16 28V42M27 18V46M38 24V42" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M49 30V40" stroke="#e8c4a6" stroke-width="7" stroke-linecap="round"/></svg>
+    <span>Сквозь</span>
+    <span class="ver" id="ver"></span>
+  </header>
+
+  <h1>Сквозь</h1>
+  <p class="lead">Музыкальный плеер для <b>SoundCloud</b> и <b>Яндекс Музыки</b>. Поток подбирает музыку по тому, что ты дослушиваешь и пропускаешь. Друзья присылают треки и переписываются прямо в приложении. Лайки можно скачать и слушать без интернета.</p>
+
+  <div class="get" id="get">
+    <a class="main" id="mainBtn" href="#all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></svg><span id="mainTxt">Выбрать версию</span></a>
+    <small id="mainSub"></small>
+  </div>
+
+  <h2 id="all">Все версии</h2>
+  <table>
+    <tbody id="rows">
+      <tr data-os="windows"><td>Windows</td><td class="what">10 и 11</td><td class="size" data-size></td><td class="go"><a data-get>Скачать</a></td></tr>
+      <tr data-os="android"><td>Android</td><td class="what">8.0 и новее, файл APK</td><td class="size" data-size></td><td class="go"><a data-get>Скачать</a></td></tr>
+      <tr data-os="mac"><td>Mac</td><td class="what">Apple Silicon — M1 и новее</td><td class="size" data-size></td><td class="go"><a data-get>Скачать</a></td></tr>
+      <tr data-os="ios"><td>iPhone</td><td class="what">ставится с компьютера</td><td class="size"></td><td class="go"><a href="#ios" data-open="ios">Как поставить</a></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Как поставить</h2>
+  <details id="d-windows"><summary>Windows</summary><ol>
+    <li>Скачай <b>Skvoz.exe</b> и запусти.</li>
+    <li>Если Windows покажет синее окно «Система Windows защитила ваш компьютер» — нажми <b>Подробнее</b>, потом <b>Выполнить в любом случае</b>. Так бывает со всеми программами без платной подписи.</li>
+    <li>Войди или зарегистрируйся — лайки и плейлисты хранятся в облаке.</li>
+  </ol></details>
+  <details id="d-android"><summary>Android</summary><ol>
+    <li>Скачай <b>Skvoz.apk</b> и открой его из уведомления или папки «Загрузки».</li>
+    <li>Телефон спросит разрешение устанавливать приложения из браузера — разреши.</li>
+    <li>Если Play Защита предупредит о неизвестном приложении — <b>Всё равно установить</b>.</li>
+  </ol></details>
+  <details id="d-mac"><summary>Mac</summary><ol>
+    <li>Скачай архив и перетащи <b>Сквозь</b> в «Программы».</li>
+    <li>Первый раз открой через правый клик → <b>Открыть</b> → <b>Открыть</b>. Дальше — как обычно.</li>
+  </ol></details>
+  <details id="ios"><summary>iPhone</summary><ol>
+    <li>Приложения нет в App Store — его ставят с компьютера через бесплатную программу <b>Sideloadly</b> (Windows или Mac) и свой Apple ID.</li>
+    <li>Файл <b>Skvoz.ipa</b> пришлёт тот, кто дал тебе эту ссылку, — он же поможет поставить.</li>
+    <li>Раз в 7 дней Sideloadly продлевает приложение сам, если компьютер включён и телефон в той же сети.</li>
+  </ol></details>
+
+  <h2 id="newsH" hidden>Что нового</h2>
+  <ul class="news" id="news"></ul>
+
+  <footer>Обновления приходят внутри приложения — скачивать заново не нужно.</footer>
+</div>
+<script>
+  const STORAGE = 'https://tsbfphiemylntpnqkbmz.supabase.co/storage/v1/object/public/releases/';
+  const ua = navigator.userAgent;
+  const os = /Android/i.test(ua) ? 'android' : /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'ios'
+    : /Mac/i.test(navigator.platform) ? 'mac' : /Win/i.test(navigator.platform) ? 'windows' : null;
+  const NAMES = { windows: 'Windows', android: 'Android', mac: 'Mac', ios: 'iPhone' };
+  const mb = n => (n / 1e6 >= 10 ? Math.round(n / 1e6) : (n / 1e6).toFixed(1).replace('.', ',')) + ' МБ';
+  const $ = s => document.querySelector(s);
+
+  if (os) {
+    document.querySelector(`tr[data-os="${os}"]`)?.classList.add('me');
+    const d = document.getElementById(os === 'ios' ? 'ios' : 'd-' + os); if (d) d.open = true;
+  }
+  if (os === 'ios') { $('#mainTxt').textContent = 'Как поставить на iPhone'; $('#mainBtn').href = '#ios'; }
+  document.querySelectorAll('[data-open]').forEach(a => a.onclick = () => { document.getElementById(a.dataset.open).open = true; });
+
+  fetch(STORAGE + 'manifest.json?t=' + Date.now()).then(r => r.json()).then(m => {
+    const when = m.date ? new Date(m.date * 1000).toLocaleDateString('ru', { day: 'numeric', month: 'long' }) : '';
+    $('#ver').textContent = 'версия ' + (m.name || m.version) + (when ? ' · ' + when : '');
+    for (const tr of document.querySelectorAll('#rows tr')) {
+      const it = m[tr.dataset.os], a = tr.querySelector('[data-get]');
+      if (!a) continue;
+      if (!it || !it.path) { a.removeAttribute('href'); a.textContent = 'скоро'; a.style.textDecoration = 'none'; continue; }
+      a.href = STORAGE + it.path;
+      tr.querySelector('[data-size]').textContent = it.size ? mb(it.size) : '';
+    }
+    const it = os && os !== 'ios' ? m[os] : null;
+    if (it && it.path) {
+      $('#mainBtn').href = STORAGE + it.path;
+      $('#mainTxt').textContent = 'Скачать для ' + NAMES[os];
+      $('#mainSub').textContent = 'версия ' + (m.name || m.version) + (it.size ? ' · ' + mb(it.size) : '');
+    }
+    const notes = String(m.notes || '').split(/\.\s+/).map(s => s.trim().replace(/\.$/, '')).filter(Boolean);
+    if (notes.length) {
+      $('#newsH').hidden = false;
+      $('#newsH').textContent = 'Что нового в ' + (m.name || m.version);
+      $('#news').innerHTML = notes.map(n => '<li>' + n.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])) + '</li>').join('');
+    }
+  }).catch(() => { $('#ver').textContent = ''; $('#mainSub').textContent = 'Не удалось узнать последнюю версию — проверь интернет'; });
+</script>
+</body>
+</html>
